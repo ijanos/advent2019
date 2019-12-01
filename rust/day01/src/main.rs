@@ -18,7 +18,7 @@ fn allfuel(mass: isize) -> isize {
 
 fn main() {
     let stdin = io::stdin();
-    let modules = stdin.lock().lines().map(|line| line.unwrap().parse::<isize>().unwrap()).collect::<Vec<_>>();
+    let modules = stdin.lock().lines().map(|line| line.unwrap().parse().unwrap()).collect::<Vec<_>>();
 
     let part1: isize = modules.iter().map(|m| m / 3 - 2 ).sum();
     println!("Part 1: {}", part1);
