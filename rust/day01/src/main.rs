@@ -1,28 +1,15 @@
 use std::io;
 use std::io::prelude::*;
-
-fn allfuel(mass: isize) -> isize {
-    let mut all = 0;
-    let mut mass = mass;
-    loop {
-        let additionalfuel = mass / 3 - 2;
-        if additionalfuel > 0 {
-            all += additionalfuel
-        } else {
-            break;
-        }
-        mass = additionalfuel;
-    }
-    all
-}
+use std::iter::successors;
 
 fn main() {
     let stdin = io::stdin();
-    let modules = stdin.lock().lines().map(|line| line.unwrap().parse().unwrap()).collect::<Vec<_>>();
+    let modules = stdin.lock().lines().map(|line| line.unwrap().parse().unwrap()).collect::<Vec<usize>>();
 
-    let part1: isize = modules.iter().map(|m| m / 3 - 2 ).sum();
+    let part1: usize = modules.iter().map(|m| m / 3 - 2 ).sum();
     println!("Part 1: {}", part1);
 
-    let part2: isize = modules.iter().map(|&m| allfuel(m)).sum();
+    let fuelalltheway = |mass: &usize| successors(Some(*mass), |m| (m / 3).checked_sub(2)).skip(1).sum::<usize>();
+    let part2: usize = modules.iter().map(fuelalltheway).sum();
     println!("Part 2: {}", part2);
 }
