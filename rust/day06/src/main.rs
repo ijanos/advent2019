@@ -14,23 +14,19 @@ fn main() {
         orbits.entry(a).or_insert_with(Vec::new).push(b);
     }
 
-    let keys = orbits.keys().collect::<HashSet<_>>();
-    let values = orbits.values().flatten().collect::<HashSet<_>>();
-    let root = keys.difference(&values).next().unwrap();
-
     let mut part1 = 0;
-    let mut nodes: Vec<(&str, usize, Vec<&str>)>  = vec![(root, 0, vec![root])];
-    let mut san: HashSet<String> = HashSet::new();
-    let mut you: HashSet<String> = HashSet::new();
+    let mut nodes: Vec<(&str, usize, Vec<&str>)>  = vec![("COM", 0, vec!["COM"])];
+    let mut san: HashSet<&str> = HashSet::new();
+    let mut you: HashSet<&str> = HashSet::new();
 
     while !nodes.is_empty() {
-        let (current, depth, path) = nodes.pop().unwrap();
+        let (current, depth, ref path) = nodes.pop().unwrap();
         part1 += depth;
         if let Some(list) = orbits.get(current) {
             for i in list {
                 match i.as_ref() {
-                    "YOU" => you = path.iter().map(|s| s.to_string()).collect(),
-                    "SAN" => san = path.iter().map(|s| s.to_string()).collect(),
+                    "YOU" => you = path.iter().copied().collect::<HashSet<_>>(),
+                    "SAN" => san = path.iter().copied().collect::<HashSet<_>>(),
                     _ => ()
                 };
                 let mut newpath = path.clone();
@@ -41,6 +37,6 @@ fn main() {
     }
     println!("Part 1: {}", part1);
 
-    let diff = you.symmetric_difference(&san).count();
-    println!("Part 2: {}", diff);
+    let part2 = you.symmetric_difference(&san).count();
+    println!("Part 2: {}", part2);
 }
