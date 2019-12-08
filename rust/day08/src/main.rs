@@ -24,13 +24,5 @@ fn main() {
     }).collect::<Vec<_>>();
 
     println!("Part 2:");
-    let black = '█';
-    let white = ' ';
-    for y in 0..HEIGHT {
-        for x in 0..WIDTH {
-            let p = if screen[y * WIDTH + x] == 0 { white } else { black };
-            print!("{}", p);
-        }
-        print!("\n");
-    }
+    screen.chunks(WIDTH).for_each(|line| println!("{}", line.iter().map(|&p| if p == 0 {' '} else {'█'}).collect::<String>()));
 }
