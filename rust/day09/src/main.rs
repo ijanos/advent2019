@@ -2,9 +2,6 @@ use std::io;
 use std::io::prelude::*;
 use std::collections::VecDeque;
 use std::iter::FromIterator;
-//use std::cmp::max;
-
-//use itertools::Itertools;
 
 #[derive(Debug)]
 enum Instruction {
@@ -104,7 +101,6 @@ impl IntCodeVM {
             code => panic!("unknown opcode {}", code)
         }
     }
-
 }
 
 fn part1(starting_memory: &[i128]) -> i128 {
