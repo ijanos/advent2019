@@ -15,7 +15,7 @@ enum Instruction {
     Jz(int, usize),
     Lt(int, int, usize),
     Mul(int, int, usize),
-    Out(int)
+    Out(int),
     Rbo(int),
 }
 
